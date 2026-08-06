@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>:Dent — Clínica Dental</title>
+  
+  <style>
+    :root {
+      --dent-teal-dark: #00363d;
+      --dent-teal-main: #00505b;
+      --dent-teal-light: #007d8c;
+      --dent-bg: #f8fafb;
+      --dent-white: #ffffff;
+      --dent-text-sub: #64748b;
+
+      --wa-bg-dark: #002f35;
+      --wa-green: #25d366;
+      --wa-green-hover: #1da851;
+      --wa-text-light: #f1f5f9;
+      --wa-text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--dent-bg);
+      color: var(--dent-teal-dark);
+      overflow-x: hidden;
+    }
+
+    /* === BANNER PROMOCIONAL SUPERIOR (NUEVO) === */
+    .dent-top-banner {
+      width: 100%;
+      background: linear-gradient(90deg, #00363d 0%, #00505b 50%, #007d8c 100%);
+      color: #ffffff;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 100;
+    }
+
+    .banner-text span {
+      background: #25d366;
+      color: #002f35;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 12px;
+      margin-right: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .banner-cta-btn {
+      background: #ffffff;
+      color: var(--dent-teal-dark);
+      text-decoration: none;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .banner-cta-btn:hover {
+      background: #25d366;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    /* === ESTILOS DE SEPARADORES SVG === */
+    .dent-divider {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .dent-divider svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 60px;
+    }
+
+    @media (max-width: 900px) {
+      .dent-top-banner {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 15px;
+        font-size: 12.5px;
+      }
+
+      .dent-divider svg {
+        height: 35px;
+      }
+    }
+
+
+    /* === SECCIÓN 0: HERO / BIENVENIDA === */
+    .dent-hero-section {
+      width: 100%;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    .hero-content {
+      width: 50%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-brand {
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--dent-teal-main);
+      letter-spacing: -2px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(0, 80, 91, 0.1), rgba(0, 125, 140, 0.15));
+      color: var(--dent-teal-main);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      width: fit-content;
+      border: 1px solid rgba(0, 80, 91, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 80, 91, 0.05);
+    }
+
+    .hero-title {
+      font-size: 50px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: var(--dent-teal-dark);
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 16.5px;
+      color: var(--dent-text-sub);
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .btn-primary-hero {
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      color: #ffffff;
+      padding: 16px 28px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 10px 25px rgba(0, 80, 91, 0.3);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary-hero:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 30px rgba(0, 80, 91, 0.4);
+    }
+
+    .btn-secondary-hero {
+      background: #ffffff;
+      color: var(--dent-teal-main);
+      border: 2px solid rgba(0, 80, 91, 0.2);
+      padding: 16px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary-hero:hover {
+      background: rgba(0, 80, 91, 0.04);
+      border-color: var(--dent-teal-main);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      width: 45%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-card-glow {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(145deg, #ffffff 0%, #f0f7f8 100%);
+      border: 1.5px solid rgba(0, 80, 91, 0.15);
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 20px 45px rgba(0, 80, 91, 0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .hero-card-glow::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -40%;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(0, 125, 140, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .stat-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      color: #fff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 8px 16px rgba(0, 80, 91, 0.2);
+    }
+
+    .stat-info h4 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+    }
+
+    .stat-info p {
+      font-size: 13.5px;
+      color: var(--dent-text-sub);
+    }
+
+
+    /* === SECCIÓN 1: TRATAMIENTOS === */
+    .dent-services-section {
+      width: 100%;
+      padding: 20px 30px 40px 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .services-header {
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .services-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: 800;
+      color: var(--dent-teal-light);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .services-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .services-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--dent-white);
+      padding: 30px 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 80, 91, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .service-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      transition: all 0.4s ease;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Colores por tarjeta */
+    .card-limpieza .service-icon-box { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+    .card-ortodoncia .service-icon-box { background: linear-gradient(135deg, #007d8c, #00505b); }
+    .card-blanqueamiento .service-icon-box { background: linear-gradient(135deg, #38b000, #007200); }
+    .card-resinas .service-icon-box { background: linear-gradient(135deg, #023e8a, #0077b6); }
+    .card-endodoncia .service-icon-box { background: linear-gradient(135deg, #7209b7, #4361ee); }
+    .card-implantes .service-icon-box { background: linear-gradient(135deg, #0f4c5c, #e36414); }
+
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 30px rgba(0, 80, 91, 0.15);
+      border-color: transparent;
+    }
+
+    .card-limpieza:hover { background: linear-gradient(145deg, #00b4d8, #0077b6); }
+    .card-ortodoncia:hover { background: linear-gradient(145deg, #007d8c, #00505b); }
+    .card-blanqueamiento:hover { background: linear-gradient(145deg, #2b9348, #007200); }
+    .card-resinas:hover { background: linear-gradient(145deg, #023e8a, #0077b6); }
+    .card-endodoncia:hover { background: linear-gradient(145deg, #7209b7, #4361ee); }
+    .card-implantes:hover { background: linear-gradient(145deg, #0f4c5c, #e36414); }
+
+    .service-card:hover .service-icon-box {
+      background: #ffffff !important;
+      color: var(--dent-teal-dark) !important;
+      transform: rotate(-10deg) scale(1.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-name {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+      transition: color 0.3s ease;
+    }
+
+    .service-desc {
+      font-size: 13.5px;
+      color: var(--dent-text-sub);
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+
+    .service-card:hover .service-name,
+    .service-card:hover .service-desc {
+      color: #ffffff !important;
+    }
+
+
+    /* === SECCIÓN 2: UBICACIÓN Y MAPA === */
+    .dent-fullscreen-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background-color: var(--dent-bg);
+      padding: 20px 0 40px 0;
+    }
+
+    .dent-info-panel {
+      width: 50%;
+      padding: 0 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: transparent;
+      z-index: 2;
+    }
+
+    .dent-brand-logo {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--dent-teal-main);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .dent-content-body {
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .dent-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: var(--dent-teal-light);
+    }
+
+    .dent-main-heading {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+
+    .dent-address-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: #ffffff;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 80, 91, 0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .dent-address-box:hover {
+      background: #f8fafb;
+      border-color: var(--dent-teal-main);
+      transform: translateY(-2px);
+    }
+
+    .address-icon-wrapper {
+      background: var(--dent-teal-main);
+      color: var(--dent-white);
+      padding: 8px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .address-details {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .address-line-1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dent-teal-dark);
+    }
+
+    .address-line-2 {
+      font-size: 13px;
+      color: var(--dent-text-sub);
+      line-height: 1.4;
+    }
+
+    .copy-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--dent-teal-main);
+      background: rgba(0, 80, 91, 0.08);
+      padding: 3px 8px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .dent-buttons-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .dent-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 14.5px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-gmaps {
+      background: var(--dent-teal-main);
+      color: var(--dent-white);
+      box-shadow: 0 4px 14px rgba(0, 80, 91, 0.2);
+    }
+
+    .btn-gmaps:hover {
+      background: var(--dent-teal-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-waze {
+      background: #ffffff;
+      color: var(--dent-teal-main);
+      border: 2px solid var(--dent-teal-main);
+    }
+
+    .btn-waze:hover {
+      background: rgba(0, 80, 91, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .arrow-icon, .brand-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .dent-action-btn:hover .arrow-icon { transform: translateX(6px); }
+    .dent-action-btn:hover .brand-icon { transform: scale(1.1); }
+
+    .dent-footer-text {
+      font-size: 12px;
+      color: var(--dent-text-sub);
+      margin-top: 20px;
+    }
+
+    .dent-map-panel {
+      width: 50%;
+      padding-right: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-frame-wrapper {
+      width: 100%;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0, 80, 91, 0.1);
+    }
+
+
+    /* === SECCIÓN 3: WHATSAPP === */
+    .dent-whatsapp-wrapper {
+      width: 100%;
+      background-color: var(--wa-bg-dark);
+      color: var(--wa-text-light);
+      display: flex;
+      align-items: center;
+    }
+
+    .dent-wa-info-panel {
+      width: 50%;
+      padding: 40px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dent-wa-content {
+      max-width: 440px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dent-wa-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: var(--wa-green);
+    }
+
+    .dent-wa-heading {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      color: #ffffff;
+    }
+
+    .dent-wa-description {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--wa-text-muted);
+    }
+
+    .dent-wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--wa-green);
+      color: #ffffff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
+      transition: all 0.3s ease;
+      margin-top: 4px;
+    }
+
+    .wa-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dent-wa-btn:hover {
+      background: var(--wa-green-hover);
+      transform: translateY(-2px);
+    }
+
+    .wa-arrow, .wa-icon { transition: transform 0.25s ease; }
+    .dent-wa-btn:hover .wa-arrow { transform: translateX(6px); }
+    .dent-wa-btn:hover .wa-icon { transform: scale(1.1) rotate(-5deg); }
+
+    .dent-wa-phone-note {
+      font-size: 13.5px;
+      color: var(--wa-text-muted);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .phone-number {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .dent-wa-visual-panel {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 125, 140, 0.15) 0%, transparent 70%);
+      padding: 40px 30px;
+    }
+
+    .wa-chat-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .avatar-group { position: relative; }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--dent-teal-light);
+      color: #fff;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .online-indicator {
+      width: 10px;
+      height: 10px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border: 2px solid var(--wa-bg-dark);
+    }
+
+    .chat-user-info { display: flex; flex-direction: column; }
+    .chat-name { font-size: 14.5px; font-weight: 700; color: #fff; }
+    .chat-status { font-size: 12px; color: var(--wa-green); }
+
+    .chat-body { display: flex; flex-direction: column; gap: 10px; }
+
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bubble-received {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--wa-text-light);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble-sent {
+      background: rgba(37, 211, 102, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-time {
+      font-size: 10px;
+      color: var(--wa-text-muted);
+      align-self: flex-end;
+    }
+
+    .chat-cta-overlay {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .chat-cta-overlay:hover { background: rgba(255, 255, 255, 0.18); }
+
+    /* === ADAPTACIÓN MÓVIL === */
+    @media (max-width: 900px) {
+      .dent-hero-section {
+        flex-direction: column;
+        min-height: auto;
+        padding: 40px 20px;
+        gap: 30px;
+      }
+
+      .hero-content, .hero-visual {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .hero-title {
+        font-size: 36px;
+      }
+
+      .dent-services-section {
+        padding: 20px 20px 15px 20px;
+      }
+
+      .services-title {
+        font-size: 26px;
+      }
+
+      .dent-fullscreen-wrapper, .dent-whatsapp-wrapper {
+        flex-direction: column;
+        min-height: auto;
+        padding: 15px 0;
+      }
+
+      .dent-info-panel, .dent-map-panel, .dent-wa-info-panel, .dent-wa-visual-panel {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .map-frame-wrapper {
+        height: 280px;
+      }
+
+      .dent-main-heading, .dent-wa-heading { 
+        font-size: 26px; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER PROMOCIONAL SUPERIOR -->
+  <div class="dent-top-banner">
+    <div class="banner-text">
+      <span>¡OFERTA ESPECIAL!</span> 🎁 Obtén un <strong>10% de descuento</strong> en tu primera cita
+    </div>
+    <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20agendar%20mi%20primera%20cita%20y%20aplicar%20el%2010%25%20de%20descuento." target="_blank" rel="noopener noreferrer" class="banner-cta-btn">
+      Reclamar Descuento →
+    </a>
+  </div>
+
+
+  <!-- SECCIÓN 0: HERO / BIENVENIDA -->
+  <section class="dent-hero-section">
+    <div class="hero-content">
+      <div class="hero-brand">:Dent</div>
+      <div class="hero-badge">✨ Tu Sonrisa Empieza Aquí</div>
+      <h1 class="hero-title">Cuidamos tu sonrisa <span>como se merece.</span></h1>
+      <p class="hero-subtitle">Tratamientos dentales sin dolor, rápidos y diseñados para devolverte la confianza de sonreír al máximo.</p>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20agendar%20mi%20primera%20cita%20y%20aplicar%20el%2010%25%20de%20descuento." target="_blank" rel="noopener noreferrer" class="btn-primary-hero">Agendar Cita con 10% OFF</a>
+        <a href="#tratamientos" class="btn-secondary-hero">Ver Tratamientos</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-glow">
+        <div class="stat-box">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="stat-info">
+            <h4>Atención 100% Cuidada</h4>
+            <p>Procedimientos cómodos y sin dolor</p>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon" style="background: linear-gradient(135deg, #007d8c, #00b4d8);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 1 0 7.75"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-info">
+            <h4>+1,000 Pacientes</h4>
+            <p>Disfrutan de su nueva sonrisa</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR 1: ONDA SUAVE -->
+  <div class="dent-divider">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.3,200.75,117.8,241.22,115.77,281.71,98,321.39,56.44Z" fill="#ffffff"></path>
+    </svg>
+  </div>
+
+
+  <!-- SECCIÓN 1: TRATAMIENTOS Y SERVICIOS -->
+  <section class="dent-services-section" id="tratamientos" style="background: #ffffff;">
+    <div class="services-header">
+      <span class="services-kicker">Especialidades</span>
+      <h2 class="services-title">Tratamientos diseñados para tu sonrisa</h2>
+    </div>
+
+    <div class="services-grid">
+      <!-- 1. Limpieza Dental -->
+      <div class="service-card card-limpieza" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3C4.5 3 3 5 3 8c0 4.5 2.5 8 4 11 1 2 2 3 5 3s4-1 5-3c1.5-3 4-6.5 4-11 0-3-1.5-5-4-5-2 0-3 1-5 2.5C10 4 9 3 7 3z"/><path d="M12 9v4"/><path d="M10 11h4"/></svg>
+        </div>
+        <h3 class="service-name">Limpieza Dental</h3>
+        <p class="service-desc">Eliminación de sarro y placa con ultrasonido para mantener tus encías sanas y sin inflamación.</p>
+      </div>
+
+      <!-- 2. Ortodoncia -->
+      <div class="service-card card-ortodoncia" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><line x1="9" y1="12" x2="15" y2="12"/><path d="M6 6v3"/><path d="M18 6v3"/><path d="M6 15v3"/><path d="M18 15v3"/></svg>
+        </div>
+        <h3 class="service-name">Ortodoncia</h3>
+        <p class="service-desc">Brackets estéticos y alineadores invisibles diseñados para corregir la posición y mordida.</p>
+      </div>
+
+      <!-- 3. Blanqueamiento -->
+      <div class="service-card card-blanqueamiento" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8-5.8 1.9 5.8 1.9 1.9 5.8 1.9-5.8 5.8-1.9-5.8-1.9z"/><path d="M5 3 3.5 6.5 0 8l3.5 1.5L5 13l1.5-3.5L10 8 6.5 6.5z"/><path d="M19 14l1.5 3.5L24 19l-3.5 1.5L19 24l-1.5-3.5L14 19l3.5-1.5z"/></svg>
+        </div>
+        <h3 class="service-name">Blanqueamiento</h3>
+        <p class="service-desc">Tecnología de aclarado dental seguro para devolverle el brillo natural a tus dientes sin sensibilidad.</p>
+      </div>
+
+      <!-- 4. Resinas Estéticas -->
+      <div class="service-card card-resinas" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3 class="service-name">Resinas Estéticas</h3>
+        <p class="service-desc">Restauraciones de alta estética del tono exacto de tu diente para reparar bordes o pequeñas caries.</p>
+      </div>
+
+      <!-- 5. Endodoncia -->
+      <div class="service-card card-endodoncia" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10s10-4.5 10-10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="service-name">Endodoncia</h3>
+        <p class="service-desc">Tratamiento especializado para eliminar infecciones profundas y conservar tu diente natural intacto.</p>
+      </div>
+
+      <!-- 6. Implantes y Prótesis -->
+      <div class="service-card card-implantes" onclick="scrollToWhatsApp()">
+        <div class="service-icon-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M9 8h6"/><path d="M10 12h4"/><path d="M11 16h2"/><path d="M12 16v6"/></svg>
+        </div>
+        <h3 class="service-name">Implantes Dentales</h3>
+        <p class="service-desc">Soluciones definitivas para sustituir piezas faltantes con la misma firmeza y estética de un diente real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR 2: ONDA INVERTIDA -->
+  <div class="dent-divider" style="background: #ffffff;">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#00505b"></path>
+      <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5V0Z" fill="var(--dent-bg)"></path>
+    </svg>
+  </div>
+
+
+  <!-- SECCIÓN 2: UBICACIÓN Y MAPA -->
+  <section class="dent-fullscreen-wrapper">
+    <div class="dent-info-panel">
+      <div class="dent-brand-logo">:Dent</div>
+
+      <div class="dent-content-body">
+        <span class="dent-kicker">Nuestra Ubicación</span>
+        <h1 class="dent-main-heading">Encuéntranos fácilmente</h1>
+
+        <div class="dent-address-box" onclick="copyFullAddress()" title="Haz clic para copiar dirección">
+          <div class="address-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="address-details">
+            <p class="address-line-1">Simon Audenard 51</p>
+            <p class="address-line-2">Amp Aviación, Venustiano Carranza, 15750 Ciudad de México, CDMX.</p>
+          </div>
+          <div class="copy-badge" id="copyBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span id="copyText">Copiar</span>
+          </div>
+        </div>
+
+        <div class="dent-buttons-stack">
+          <a href="https://maps.google.com/?q=Simon+Audenard+51+Amp+Aviacion+Venustiano+Carranza+15750+Ciudad+de+Mexico" target="_blank" rel="noopener noreferrer" class="dent-action-btn btn-gmaps">
+            <div class="btn-left">
+              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+              <span>Abrir en Google Maps</span>
+            </div>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+
+          <a href="https://waze.com/ul?q=Simon%20Audenard%2051%20Amp%20Aviacion" target="_blank" rel="noopener noreferrer" class="dent-action-btn btn-waze">
+            <div class="btn-left">
+              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+              <span>Abrir en Waze</span>
+            </div>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <footer class="dent-footer-text">
+        © :Dent — Todos los derechos reservados
+      </footer>
+    </div>
+
+    <div class="dent-map-panel">
+      <div class="map-frame-wrapper">
+        <iframe 
+          title="Mapa de Ubicación Dent"
+          src="https://maps.google.com/maps?q=Simon%20Audenard%2051,%20Amp%20Aviaci%C3%B3n,%20Venustiano%20Carranza,%2015750%20Ciudad%20de%20M%C3%A9xico&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEPARADOR 3: ONDA OSCURA -->
+  <div class="dent-divider">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0C150,90,350,-40,500,65C650,170,900,10,1200,40V120H0Z" fill="var(--wa-bg-dark)"></path>
+    </svg>
+  </div>
+
+
+  <!-- SECCIÓN 3: WHATSAPP -->
+  <section class="dent-whatsapp-wrapper" id="wa-section">
+    <div class="dent-wa-info-panel">
+      <div class="dent-wa-content">
+        <span class="dent-wa-kicker">Atención Personalizada</span>
+        <h2 class="dent-wa-heading">¿Tienes dudas o quieres agendar una cita?</h2>
+        <p class="dent-wa-description">
+          Estamos listos para atenderte. Haz clic en el botón para iniciar una conversación directa por WhatsApp con nuestro equipo.
+        </p>
+
+        <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20solicitar%20más%20información." target="_blank" rel="noopener noreferrer" class="dent-wa-btn">
+          <div class="wa-btn-left">
+            <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+            <span>Solicitar información por WhatsApp</span>
+          </div>
+          <svg class="wa-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <div class="dent-wa-phone-note">
+          <span class="phone-label">Número directo:</span>
+          <span class="phone-number">+52 55 3220 7995</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dent-wa-visual-panel">
+      <div class="wa-chat-card">
+        <div class="chat-header">
+          <div class="avatar-group">
+            <div class="avatar">:D</div>
+            <span class="online-indicator"></span>
+          </div>
+          <div class="chat-user-info">
+            <span class="chat-name">Atención al Cliente</span>
+            <span class="chat-status">En línea ahora</span>
+          </div>
+        </div>
+        
+        <div class="chat-body">
+          <div class="chat-bubble bubble-received">
+            ¡Hola! 👋 ¿En qué podemos ayudarte hoy?
+            <span class="chat-time">Ahora</span>
+          </div>
+          <div class="chat-bubble bubble-sent">
+            Hola, me gustaría solicitar más información sobre sus servicios.
+            <span class="chat-time">Mensaje listo</span>
+          </div>
+        </div>
+
+        <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20solicitar%20más%20información." target="_blank" rel="noopener noreferrer" class="chat-cta-overlay">
+          <span>Enviar mensaje directo</span> →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function copyFullAddress() {
+      const address = "Simon Audenard 51, Amp Aviación, Venustiano Carranza, 15750 Ciudad de México, CDMX.";
+      navigator.clipboard.writeText(address).then(() => {
+        const badgeText = document.getElementById('copyText');
+        const badge = document.getElementById('copyBadge');
+        
+        if (badgeText && badge) {
+          badgeText.innerText = '¡Copiado!';
+          badge.style.background = '#22c55e';
+          badge.style.color = '#ffffff';
+          
+          setTimeout(() => {
+            badgeText.innerText = 'Copiar';
+            badge.style.background = 'rgba(0, 80, 91, 0.08)';
+            badge.style.color = 'var(--dent-teal-main)';
+          }, 2000);
+        }
+      });
+    }
+
+    function scrollToWhatsApp() {
+      const waSection = document.getElementById('wa-section');
+      if (waSection) {
+        waSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
+
+</body>
+</html>
