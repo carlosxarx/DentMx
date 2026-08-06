@@ -34,7 +34,7 @@
       overflow-x: hidden;
     }
 
-    /* === BANNER PROMOCIONAL SUPERIOR (NUEVO) === */
+    /* === BANNER PROMOCIONAL SUPERIOR === */
     .dent-top-banner {
       width: 100%;
       background: linear-gradient(90deg, #00363d 0%, #00505b 50%, #007d8c 100%);
@@ -84,6 +84,68 @@
       transform: scale(1.05);
     }
 
+    /* === PERSONAJE FLOTANTE INTERACTIVO (WIDGET ESQUINA) === */
+    .mascot-floating-widget {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .mascot-speech-bubble {
+      background: #ffffff;
+      color: var(--dent-teal-dark);
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(0, 80, 91, 0.18);
+      border: 2px solid rgba(0, 80, 91, 0.1);
+      position: relative;
+      animation: popIn 0.5s ease forwards;
+      white-space: nowrap;
+    }
+
+    .mascot-speech-bubble::after {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 6px 8px 6px 0;
+      border-style: solid;
+      border-color: transparent #ffffff transparent transparent;
+    }
+
+    .mascot-widget-img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(0, 80, 91, 0.25));
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: floatSmooth 3.5s ease-in-out infinite;
+    }
+
+    .mascot-floating-widget:hover .mascot-widget-img {
+      transform: scale(1.2) rotate(-5deg);
+    }
+
+    /* Keyframes Animaciones */
+    @keyframes floatSmooth {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8) translateX(-10px); }
+      100% { opacity: 1; transform: scale(1) translateX(0); }
+    }
+
+
     /* === ESTILOS DE SEPARADORES SVG === */
     .dent-divider {
       width: 100%;
@@ -109,10 +171,19 @@
       .dent-divider svg {
         height: 35px;
       }
+
+      .mascot-speech-bubble {
+        display: none; /* Se oculta el texto en móviles pequeños para no estorbar */
+      }
+      
+      .mascot-widget-img {
+        width: 55px;
+        height: 55px;
+      }
     }
 
 
-    /* === SECCIÓN 0: HERO / BIENVENIDA === */
+    /* === SECCIÓN 0: HERO / BIENVENIDA CON PERSONAJE === */
     .dent-hero-section {
       width: 100%;
       min-height: 75vh;
@@ -223,64 +294,44 @@
       width: 45%;
       display: flex;
       justify-content: center;
+      align-items: center;
       position: relative;
     }
 
-    .hero-card-glow {
+    /* Contenedor del Personaje en Hero con halo brillante */
+    .hero-mascot-wrapper {
+      position: relative;
       width: 100%;
-      max-width: 380px;
-      background: linear-gradient(145deg, #ffffff 0%, #f0f7f8 100%);
-      border: 1.5px solid rgba(0, 80, 91, 0.15);
-      border-radius: 28px;
-      padding: 36px;
-      box-shadow: 0 20px 45px rgba(0, 80, 91, 0.1);
-      position: relative;
-      overflow: hidden;
+      max-width: 400px;
       display: flex;
-      flex-direction: column;
-      gap: 24px;
+      justify-content: center;
+      align-items: center;
     }
 
-    .hero-card-glow::after {
+    .hero-mascot-wrapper::before {
       content: '';
       position: absolute;
-      top: -40%;
-      right: -40%;
-      width: 220px;
-      height: 220px;
+      width: 320px;
+      height: 320px;
       background: radial-gradient(circle, rgba(0, 125, 140, 0.2) 0%, transparent 70%);
       border-radius: 50%;
+      z-index: 1;
     }
 
-    .stat-box {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .hero-mascot-img {
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+      object-fit: contain;
       z-index: 2;
+      filter: drop-shadow(0 15px 30px rgba(0, 80, 91, 0.2));
+      animation: floatSmooth 4s ease-in-out infinite;
+      transition: transform 0.4s ease;
+      cursor: pointer;
     }
 
-    .stat-icon {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
-      color: #fff;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 8px 16px rgba(0, 80, 91, 0.2);
-    }
-
-    .stat-info h4 {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--dent-teal-dark);
-    }
-
-    .stat-info p {
-      font-size: 13.5px;
-      color: var(--dent-text-sub);
+    .hero-mascot-img:hover {
+      transform: scale(1.05) rotate(2deg);
     }
 
 
@@ -852,6 +903,13 @@
   </div>
 
 
+  <!-- WIDGET FLOTANTE DEL PERSONAJE (ESQUINA INFERIOR IZQUIERDA) -->
+  <div class="mascot-floating-widget" onclick="scrollToWhatsApp()" title="¡Haz clic para chatear!">
+    <div class="mascot-speech-bubble">¡Hola! ¿Agendamos tu cita? 👋</div>
+    <img src="mascota-dent.png" alt=":Dent Mascota" class="mascot-widget-img">
+  </div>
+
+
   <!-- SECCIÓN 0: HERO / BIENVENIDA -->
   <section class="dent-hero-section">
     <div class="hero-content">
@@ -866,27 +924,10 @@
       </div>
     </div>
 
+    <!-- PERSONAJE EN HERO PRINCIPAL -->
     <div class="hero-visual">
-      <div class="hero-card-glow">
-        <div class="stat-box">
-          <div class="stat-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="stat-info">
-            <h4>Atención 100% Cuidada</h4>
-            <p>Procedimientos cómodos y sin dolor</p>
-          </div>
-        </div>
-
-        <div class="stat-box">
-          <div class="stat-icon" style="background: linear-gradient(135deg, #007d8c, #00b4d8);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 1 0 7.75"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="stat-info">
-            <h4>+1,000 Pacientes</h4>
-            <p>Disfrutan de su nueva sonrisa</p>
-          </div>
-        </div>
+      <div class="hero-mascot-wrapper">
+        <img src="mascota-dent.png" alt=":Dent Mascot" class="hero-mascot-img" onclick="scrollToWhatsApp()">
       </div>
     </div>
   </section>
