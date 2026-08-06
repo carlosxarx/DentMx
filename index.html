@@ -27,12 +27,32 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--dent-bg);
       color: var(--dent-teal-dark);
       overflow-x: hidden;
     }
+
+    /* === ANIMACIONES DE SCROLL (REVEAL) === */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .scroll-reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.15s; }
+    .delay-2 { transition-delay: 0.3s; }
 
     /* === BANNER PROMOCIONAL SUPERIOR === */
     .dent-top-banner {
@@ -49,7 +69,7 @@
       gap: 12px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       position: relative;
-      z-index: 100;
+      z-index: 101;
     }
 
     .banner-text span {
@@ -84,20 +104,103 @@
       transform: scale(1.05);
     }
 
-    /* === ESTILOS DE SEPARADORES SVG === */
-    .dent-divider {
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      position: relative;
-      z-index: 2;
+    /* === HEADER FIJO INTELIGENTE (GLASSMORPHISM NAVBAR) === */
+    .dent-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(248, 250, 251, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 80, 91, 0.08);
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
     }
 
-    .dent-divider svg {
-      position: relative;
-      display: block;
-      width: calc(100% + 1.3px);
+    .nav-logo {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--dent-teal-main);
+      text-decoration: none;
+      letter-spacing: -1.5px;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--dent-teal-dark);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--dent-teal-light);
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      box-shadow: 0 4px 12px rgba(0, 80, 91, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 80, 91, 0.3);
+    }
+
+    /* === BOTÓN FLOTANTE DE WHATSAPP CON PULSO === */
+    .whatsapp-float-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
       height: 60px;
+      background: var(--wa-green);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+      z-index: 999;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .whatsapp-float-btn::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--wa-green);
+      opacity: 0.6;
+      animation: pulseRing 2s infinite;
+      z-index: -1;
+    }
+
+    .whatsapp-float-btn:hover {
+      transform: scale(1.12) rotate(-5deg);
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      100% { transform: scale(1.65); opacity: 0; }
     }
 
     /* === SECCIÓN HERO DINÁMICA / BIENVENIDA === */
@@ -109,7 +212,6 @@
       overflow: hidden;
     }
 
-    /* Luces de fondo flotantes */
     .hero-bg-glow-1 {
       position: absolute;
       top: -100px;
@@ -141,13 +243,13 @@
 
     .dent-hero-section {
       width: 100%;
-      min-height: 80vh;
+      min-height: 65vh;
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 60px 30px;
+      padding: 40px 30px 20px 30px;
       position: relative;
       z-index: 2;
       gap: 40px;
@@ -157,13 +259,37 @@
       width: 55%;
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 18px;
     }
 
-    .hero-brand-badge {
-      display: flex;
+    .live-status-badge {
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+      background: #ffffff;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--dent-teal-dark);
+      border: 1px solid rgba(0, 80, 91, 0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      width: fit-content;
+    }
+
+    .live-dot {
+      width: 9px;
+      height: 9px;
+      background-color: var(--wa-green);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+      animation: dotPulse 1.8s infinite;
+    }
+
+    @keyframes dotPulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
 
     .hero-brand {
@@ -174,22 +300,8 @@
       line-height: 1;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(0, 80, 91, 0.08);
-      color: var(--dent-teal-main);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 800;
-      border: 1px solid rgba(0, 80, 91, 0.15);
-      backdrop-filter: blur(4px);
-    }
-
     .hero-title {
-      font-size: 50px;
+      font-size: 48px;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: -1.5px;
@@ -203,18 +315,17 @@
     }
 
     .hero-subtitle {
-      font-size: 17px;
+      font-size: 16.5px;
       color: var(--dent-text-sub);
       line-height: 1.6;
       max-width: 540px;
     }
 
-    /* Píldoras de beneficios */
     .hero-features-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .feature-pill {
@@ -238,18 +349,18 @@
     .hero-actions {
       display: flex;
       gap: 14px;
-      margin-top: 8px;
+      margin-top: 6px;
       flex-wrap: wrap;
     }
 
     .btn-primary-hero {
       background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
       color: #ffffff;
-      padding: 16px 30px;
+      padding: 15px 28px;
       border-radius: 14px;
       text-decoration: none;
       font-weight: 800;
-      font-size: 15.5px;
+      font-size: 15px;
       box-shadow: 0 10px 25px rgba(0, 80, 91, 0.28);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: inline-flex;
@@ -266,11 +377,11 @@
       background: #ffffff;
       color: var(--dent-teal-main);
       border: 2px solid rgba(0, 80, 91, 0.2);
-      padding: 16px 26px;
+      padding: 15px 24px;
       border-radius: 14px;
       text-decoration: none;
       font-weight: 700;
-      font-size: 15.5px;
+      font-size: 15px;
       transition: all 0.3s ease;
     }
 
@@ -280,7 +391,6 @@
       transform: translateY(-2px);
     }
 
-    /* Panel Visual Dinámico de la Derecha */
     .hero-visual-panel {
       width: 42%;
       display: flex;
@@ -290,21 +400,15 @@
     }
 
     .hero-card-glass {
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 24px;
       padding: 24px;
-      box-shadow: 0 20px 40px rgba(0, 54, 61, 0.07);
+      box-shadow: 0 20px 40px rgba(0, 54, 61, 0.08);
       display: flex;
       flex-direction: column;
       gap: 16px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .hero-card-glass:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 25px 50px rgba(0, 54, 61, 0.12);
     }
 
     .glass-card-header {
@@ -314,8 +418,8 @@
     }
 
     .glass-icon-box {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
       color: #ffffff;
       border-radius: 14px;
@@ -326,7 +430,7 @@
     }
 
     .glass-card-info h4 {
-      font-size: 17px;
+      font-size: 16.5px;
       font-weight: 800;
       color: var(--dent-teal-dark);
     }
@@ -341,7 +445,7 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       border-top: 1px solid rgba(0, 80, 91, 0.08);
-      padding-top: 16px;
+      padding-top: 14px;
     }
 
     .stat-item {
@@ -350,52 +454,206 @@
     }
 
     .stat-number {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--dent-teal-main);
+      font-variant-numeric: tabular-nums;
     }
 
     .stat-label {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--dent-text-sub);
       font-weight: 600;
     }
 
-    /* Tarjeta flotante de valoración */
-    .rating-badge-card {
+    /* === SECCIÓN TESTIMONIOS (GOOGLE MAPS SLIDER) === */
+    .dent-testimonials-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 4;
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .google-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: #ffffff;
-      border-radius: 18px;
-      padding: 14px 18px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--dent-teal-dark);
+      border: 1px solid rgba(0, 80, 91, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .testimonials-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .testimonial-card-container {
+      width: 100%;
+      max-width: 700px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0, 80, 91, 0.08);
+      border: 1px solid rgba(0, 80, 91, 0.1);
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
       display: flex;
       align-items: center;
+    }
+
+    .testimonial-slide {
+      display: none;
+      flex-direction: column;
       gap: 14px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 80, 91, 0.1);
-      width: fit-content;
-      align-self: flex-end;
-      transform: rotate(1.5deg);
-      transition: transform 0.3s ease;
+      width: 100%;
+      animation: fadeIn 0.4s ease forwards;
     }
 
-    .rating-badge-card:hover {
-      transform: rotate(0deg) scale(1.03);
+    .testimonial-slide.active {
+      display: flex;
     }
 
-    .stars-box {
-      color: #f59e0b;
-      font-size: 14px;
-      letter-spacing: 1px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
-    .rating-text p {
-      font-size: 12px;
+    .review-user-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      color: #ffffff;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .user-name-box h5 {
+      font-size: 15px;
       font-weight: 800;
       color: var(--dent-teal-dark);
     }
 
-    .rating-text span {
-      font-size: 11px;
+    .user-name-box span {
+      font-size: 11.5px;
       color: var(--dent-text-sub);
+    }
+
+    .stars-rating {
+      color: #f59e0b;
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--dent-teal-dark);
+      font-style: italic;
+    }
+
+    /* Botones de navegación del slider */
+    .slider-controls {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 700px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    .slider-btn {
+      background: #ffffff;
+      border: 1px solid rgba(0, 80, 91, 0.15);
+      color: var(--dent-teal-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .slider-btn:hover {
+      background: var(--dent-teal-main);
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .dots-indicator {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 80, 91, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--dent-teal-main);
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    /* === FRANJA DE DEGRADADO ELEGANTE === */
+    .hero-location-gradient-transition {
+      width: 100%;
+      height: 60px;
+      background: linear-gradient(
+        180deg, 
+        rgba(248, 250, 251, 0) 0%, 
+        rgba(0, 80, 91, 0.04) 50%, 
+        rgba(248, 250, 251, 1) 100%
+      );
+      position: relative;
+      z-index: 3;
     }
 
     /* === SECCIÓN UBICACIÓN Y MAPA === */
@@ -404,75 +662,76 @@
       display: flex;
       align-items: center;
       background-color: var(--dent-bg);
-      padding: 60px 0;
+      padding: 10px 0 50px 0;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .dent-info-panel {
       width: 50%;
-      padding: 0 50px;
+      padding: 0 30px 0 50px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: transparent;
-      z-index: 2;
     }
 
     .dent-brand-logo {
-      font-size: 36px;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 900;
       color: var(--dent-teal-main);
       letter-spacing: -1.5px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .dent-content-body {
       max-width: 440px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .dent-kicker {
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--dent-teal-light);
     }
 
     .dent-main-heading {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--dent-teal-dark);
       line-height: 1.15;
-      letter-spacing: -1px;
+      letter-spacing: -0.8px;
     }
 
     .dent-address-box {
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: 12px;
       background: #ffffff;
-      padding: 14px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(0, 80, 91, 0.12);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 80, 91, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
     }
 
     .dent-address-box:hover {
-      background: #f8fafb;
+      background: #ffffff;
       border-color: var(--dent-teal-main);
       transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 80, 91, 0.08);
     }
 
     .address-icon-wrapper {
       background: var(--dent-teal-main);
       color: var(--dent-white);
-      padding: 8px;
-      border-radius: 10px;
+      padding: 7px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -482,33 +741,33 @@
     .address-details {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
 
     .address-line-1 {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--dent-teal-dark);
     }
 
     .address-line-2 {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--dent-text-sub);
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     .copy-badge {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 10px;
+      right: 10px;
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 700;
       color: var(--dent-teal-main);
       background: rgba(0, 80, 91, 0.08);
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 20px;
       transition: all 0.2s ease;
     }
@@ -516,18 +775,18 @@
     .dent-buttons-stack {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 4px;
+      gap: 8px;
+      margin-top: 2px;
     }
 
     .dent-action-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
-      border-radius: 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
       text-decoration: none;
-      font-size: 14.5px;
+      font-size: 13.5px;
       font-weight: 700;
       transition: all 0.3s ease;
     }
@@ -535,13 +794,13 @@
     .btn-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn-gmaps {
       background: var(--dent-teal-main);
       color: var(--dent-white);
-      box-shadow: 0 4px 14px rgba(0, 80, 91, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 80, 91, 0.18);
     }
 
     .btn-gmaps:hover {
@@ -552,7 +811,7 @@
     .btn-waze {
       background: #ffffff;
       color: var(--dent-teal-main);
-      border: 2px solid var(--dent-teal-main);
+      border: 1.5px solid var(--dent-teal-main);
     }
 
     .btn-waze:hover {
@@ -564,13 +823,13 @@
       transition: transform 0.25s ease;
     }
 
-    .dent-action-btn:hover .arrow-icon { transform: translateX(6px); }
+    .dent-action-btn:hover .arrow-icon { transform: translateX(5px); }
     .dent-action-btn:hover .brand-icon { transform: scale(1.1); }
 
     .dent-footer-text {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--dent-text-sub);
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     .dent-map-panel {
@@ -583,11 +842,25 @@
 
     .map-frame-wrapper {
       width: 100%;
-      height: 420px;
-      border-radius: 20px;
+      height: 340px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
       border: 1px solid rgba(0, 80, 91, 0.1);
+    }
+
+    /* === ESTILOS DE SEPARADOR A WHATSAPP === */
+    .dent-divider {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .dent-divider svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 50px;
     }
 
     /* === SECCIÓN WHATSAPP === */
@@ -601,7 +874,7 @@
 
     .dent-wa-info-panel {
       width: 50%;
-      padding: 60px 50px;
+      padding: 50px 50px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -624,7 +897,7 @@
     }
 
     .dent-wa-heading {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 800;
       line-height: 1.15;
       letter-spacing: -1px;
@@ -632,7 +905,7 @@
     }
 
     .dent-wa-description {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.5;
       color: var(--wa-text-muted);
     }
@@ -643,10 +916,10 @@
       justify-content: space-between;
       background: var(--wa-green);
       color: #ffffff;
-      padding: 16px 20px;
+      padding: 15px 20px;
       border-radius: 14px;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 700;
       box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
       transition: all 0.3s ease;
@@ -669,7 +942,7 @@
     .dent-wa-btn:hover .wa-icon { transform: scale(1.1) rotate(-5deg); }
 
     .dent-wa-phone-note {
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--wa-text-muted);
       display: flex;
       gap: 8px;
@@ -687,12 +960,12 @@
       align-items: center;
       justify-content: center;
       background: radial-gradient(circle at 50% 50%, rgba(0, 125, 140, 0.15) 0%, transparent 70%);
-      padding: 60px 30px;
+      padding: 50px 30px;
     }
 
     .wa-chat-card {
       width: 100%;
-      max-width: 360px;
+      max-width: 350px;
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -715,8 +988,8 @@
     .avatar-group { position: relative; }
 
     .avatar {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       background: var(--dent-teal-light);
       color: #fff;
       font-weight: 800;
@@ -724,6 +997,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 13px;
     }
 
     .online-indicator {
@@ -738,15 +1012,15 @@
     }
 
     .chat-user-info { display: flex; flex-direction: column; }
-    .chat-name { font-size: 14.5px; font-weight: 700; color: #fff; }
-    .chat-status { font-size: 12px; color: var(--wa-green); }
+    .chat-name { font-size: 14px; font-weight: 700; color: #fff; }
+    .chat-status { font-size: 11.5px; color: var(--wa-green); }
 
     .chat-body { display: flex; flex-direction: column; gap: 10px; }
 
     .chat-bubble {
       padding: 10px 14px;
       border-radius: 12px;
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.4;
       display: flex;
       flex-direction: column;
@@ -781,7 +1055,7 @@
       padding: 10px;
       border-radius: 10px;
       text-decoration: none;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       transition: background 0.2s ease;
     }
@@ -797,10 +1071,18 @@
         font-size: 12.5px;
       }
 
+      .dent-navbar {
+        padding: 10px 20px;
+      }
+
+      .nav-menu .nav-link {
+        display: none;
+      }
+
       .dent-hero-section {
         flex-direction: column;
         min-height: auto;
-        padding: 40px 20px;
+        padding: 30px 20px;
       }
 
       .hero-content, .hero-visual-panel {
@@ -808,15 +1090,23 @@
       }
 
       .hero-title {
-        font-size: 36px;
+        font-size: 34px;
       }
 
       .hero-subtitle {
-        font-size: 15.5px;
+        font-size: 15px;
       }
 
-      .rating-badge-card {
-        align-self: center;
+      .dent-testimonials-section {
+        padding: 20px 20px;
+      }
+
+      .testimonial-card-container {
+        padding: 20px;
+      }
+
+      .hero-location-gradient-transition {
+        height: 40px;
       }
 
       .dent-fullscreen-wrapper, .dent-whatsapp-wrapper {
@@ -831,11 +1121,11 @@
       }
 
       .map-frame-wrapper {
-        height: 280px;
+        height: 250px;
       }
 
       .dent-main-heading, .dent-wa-heading { 
-        font-size: 26px; 
+        font-size: 24px; 
       }
 
       .dent-divider svg {
@@ -856,6 +1146,22 @@
     </a>
   </div>
 
+  <!-- HEADER FIJO INTELIGENTE (GLASSMORPHISM NAVBAR) -->
+  <header class="dent-navbar">
+    <a href="#" class="nav-logo">:Dent</a>
+    <nav class="nav-menu">
+      <a href="#testimonios" class="nav-link">Opiniones</a>
+      <a href="#ubicacion" class="nav-link">Ubicación</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+      <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20agendar%20una%20cita." target="_blank" rel="noopener noreferrer" class="nav-btn">Agendar Cita</a>
+    </nav>
+  </header>
+
+  <!-- BOTÓN FLOTANTE DE WHATSAPP CON PULSO (ESQUINA INFERIOR DERECHA) -->
+  <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20solicitar%20información." target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="Escríbenos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+  </a>
+
   <!-- CONTAINER DE HERO CON EFECTO DE LUZ Y FONDO DINÁMICO -->
   <div class="hero-container">
     <div class="hero-bg-glow-1"></div>
@@ -863,11 +1169,15 @@
 
     <!-- SECCIÓN 1: BIENVENIDA (HERO) -->
     <section class="dent-hero-section">
-      <div class="hero-content">
-        <div class="hero-brand-badge">
-          <div class="hero-brand">:Dent</div>
-          <div class="hero-badge">✨ Odontología Moderna</div>
+      <div class="hero-content scroll-reveal">
+        
+        <!-- STATUS BADGE EN VIVO -->
+        <div class="live-status-badge">
+          <span class="live-dot"></span>
+          <span>Consulta disponible hoy · Respuesta en &lt; 5 min</span>
         </div>
+
+        <div class="hero-brand">:Dent</div>
 
         <h1 class="hero-title">Cuidamos tu sonrisa <span>como se merece.</span></h1>
         <p class="hero-subtitle">Tratamientos sin dolor, tecnología de vanguardia y atención humana diseñada para devolverte la seguridad al sonreír.</p>
@@ -894,12 +1204,12 @@
         </div>
       </div>
 
-      <!-- PANEL VISUAL DERECHO CON GLASSMORPHISM Y SOCIAL PROOF -->
-      <div class="hero-visual-panel">
+      <!-- PANEL VISUAL DERECHO CON GLASSMORPHISM Y CONTADOR ANIMADO -->
+      <div class="hero-visual-panel scroll-reveal delay-1">
         <div class="hero-card-glass">
           <div class="glass-card-header">
             <div class="glass-icon-box">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
             <div class="glass-card-info">
               <h4>Tu salud dental en buenas manos</h4>
@@ -909,38 +1219,94 @@
 
           <div class="glass-stats-grid">
             <div class="stat-item">
-              <span class="stat-number">+1,200</span>
+              <span class="stat-number counter-el" data-target="1200" data-prefix="+" data-suffix="">+0</span>
               <span class="stat-label">Sonrisas Renovadas</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">100%</span>
+              <span class="stat-number counter-el" data-target="100" data-prefix="" data-suffix="%">0%</span>
               <span class="stat-label">Garantía de Cuidado</span>
             </div>
-          </div>
-        </div>
-
-        <!-- Tarjeta Flotante de Calificación -->
-        <div class="rating-badge-card">
-          <div class="stars-box">★★★★★</div>
-          <div class="rating-text">
-            <p>Excelente Atención</p>
-            <span>Pacientes Satisfechos</span>
           </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- SEPARADOR 1 -->
-  <div class="dent-divider">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5V0Z" fill="var(--dent-bg)"></path>
-    </svg>
-  </div>
+  <!-- SECCIÓN NUEVA: TESTIMONIOS INTERACTIVOS (GOOGLE MAPS) -->
+  <section class="dent-testimonials-section id="testimonios" class="scroll-reveal">
+    <div class="testimonials-header">
+      <div class="google-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.96 1.013 6.693 2.613l2.32-2.32C19.04 1.347 15.973 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
+        <span>Reseñas de Google Maps</span>
+      </div>
+      <h2 class="testimonials-title">Lo que dicen nuestros pacientes</h2>
+    </div>
 
-  <!-- SECCIÓN 2: UBICACIÓN Y MAPA -->
+    <div class="testimonial-card-container">
+      <!-- Reseña 1 -->
+      <div class="testimonial-slide active">
+        <div class="review-user-header">
+          <div class="user-info">
+            <div class="user-avatar">M</div>
+            <div class="user-name-box">
+              <h5>Mariana Gómez</h5>
+              <span>Paciente verificado en Google</span>
+            </div>
+          </div>
+          <div class="stars-rating">★★★★★</div>
+        </div>
+        <p class="review-text">"La atención de todo el equipo fue excelente. Me daba mucho miedo ir al dentista por experiencias pasadas, pero aquí no sentí absolutamente nada de dolor. 100% recomendados."</p>
+      </div>
+
+      <!-- Reseña 2 -->
+      <div class="testimonial-slide">
+        <div class="review-user-header">
+          <div class="user-info">
+            <div class="user-avatar">C</div>
+            <div class="user-name-box">
+              <h5>Carlos Mendoza</h5>
+              <span>Paciente verificado en Google</span>
+            </div>
+          </div>
+          <div class="stars-rating">★★★★★</div>
+        </div>
+        <p class="review-text">"Súper profesionales y las instalaciones impecables. Me hicieron una limpieza y quedé encantado con el resultado. La ubicación en Venustiano Carranza me queda excelente."</p>
+      </div>
+
+      <!-- Reseña 3 -->
+      <div class="testimonial-slide">
+        <div class="review-user-header">
+          <div class="user-info">
+            <div class="user-avatar">A</div>
+            <div class="user-name-box">
+              <h5>Andrea Torres</h5>
+              <span>Paciente verificado en Google</span>
+            </div>
+          </div>
+          <div class="stars-rating">★★★★★</div>
+        </div>
+        <p class="review-text">"Excelente trato desde que agendé por WhatsApp hasta la consulta. Te explican todo súper bien y sin prisas. La mejor clínica dental de la zona."</p>
+      </div>
+    </div>
+
+    <!-- Controles del Slider -->
+    <div class="slider-controls">
+      <button class="slider-btn" onclick="moveSlide(-1)" title="Anterior">←</button>
+      <div class="dots-indicator">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="slider-btn" onclick="moveSlide(1)" title="Siguiente">→</button>
+    </div>
+  </section>
+
+  <!-- TRANSICIÓN EN DEGRADADO SUAVE -->
+  <div class="hero-location-gradient-transition"></div>
+
+  <!-- SECCIÓN 2: UBICACIÓN Y MAPA (COMPACTA) -->
   <section class="dent-fullscreen-wrapper" id="ubicacion">
-    <div class="dent-info-panel">
+    <div class="dent-info-panel scroll-reveal">
       <div class="dent-brand-logo">:Dent</div>
 
       <div class="dent-content-body">
@@ -949,14 +1315,14 @@
 
         <div class="dent-address-box" onclick="copyFullAddress()" title="Haz clic para copiar dirección">
           <div class="address-icon-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div class="address-details">
             <p class="address-line-1">Simon Audenard 51</p>
             <p class="address-line-2">Amp Aviación, Venustiano Carranza, 15750 Ciudad de México, CDMX.</p>
           </div>
           <div class="copy-badge" id="copyBadge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
             <span id="copyText">Copiar</span>
           </div>
         </div>
@@ -964,18 +1330,18 @@
         <div class="dent-buttons-stack">
           <a href="https://maps.google.com/?q=Simon+Audenard+51+Amp+Aviacion+Venustiano+Carranza+15750+Ciudad+de+Mexico" target="_blank" rel="noopener noreferrer" class="dent-action-btn btn-gmaps">
             <div class="btn-left">
-              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
               <span>Abrir en Google Maps</span>
             </div>
-            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
 
           <a href="https://waze.com/ul?q=Simon%20Audenard%2051%20Amp%20Aviacion" target="_blank" rel="noopener noreferrer" class="dent-action-btn btn-waze">
             <div class="btn-left">
-              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+              <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
               <span>Abrir en Waze</span>
             </div>
-            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </div>
       </div>
@@ -985,7 +1351,7 @@
       </footer>
     </div>
 
-    <div class="dent-map-panel">
+    <div class="dent-map-panel scroll-reveal delay-1">
       <div class="map-frame-wrapper">
         <iframe 
           title="Mapa de Ubicación Dent"
@@ -1001,7 +1367,7 @@
     </div>
   </section>
 
-  <!-- SEPARADOR 2 -->
+  <!-- SEPARADOR A WHATSAPP -->
   <div class="dent-divider">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
       <path d="M0,0C150,90,350,-40,500,65C650,170,900,10,1200,40V120H0Z" fill="var(--wa-bg-dark)"></path>
@@ -1010,7 +1376,7 @@
 
   <!-- SECCIÓN 3: WHATSAPP Y CONTACTO -->
   <section class="dent-whatsapp-wrapper" id="contacto">
-    <div class="dent-wa-info-panel">
+    <div class="dent-wa-info-panel scroll-reveal">
       <div class="dent-wa-content">
         <span class="dent-wa-kicker">Atención Personalizada</span>
         <h2 class="dent-wa-heading">¿Tienes dudas o quieres agendar una cita?</h2>
@@ -1033,7 +1399,7 @@
       </div>
     </div>
 
-    <div class="dent-wa-visual-panel">
+    <div class="dent-wa-visual-panel scroll-reveal delay-1">
       <div class="wa-chat-card">
         <div class="chat-header">
           <div class="avatar-group">
@@ -1064,6 +1430,7 @@
     </div>
   </section>
 
+  <!-- JAVASCRIPT -->
   <script>
     function copyFullAddress() {
       const address = "Simon Audenard 51, Amp Aviación, Venustiano Carranza, 15750 Ciudad de México, CDMX.";
@@ -1084,6 +1451,68 @@
         }
       });
     }
+
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'));
+      const prefix = el.getAttribute('data-prefix') || '';
+      const suffix = el.getAttribute('data-suffix') || '';
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target / 45));
+      
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        el.innerText = prefix + current.toLocaleString() + suffix;
+      }, 30);
+    }
+
+    /* CARRUSEL DE TESTIMONIOS */
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      if (index >= slides.length) currentSlide = 0;
+      if (index < 0) currentSlide = slides.length - 1;
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function moveSlide(direction) {
+      currentSlide += direction;
+      showSlide(currentSlide);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            
+            const counters = entry.target.querySelectorAll('.counter-el');
+            counters.forEach(counter => animateCounter(counter));
+
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const elementsToAnimate = document.querySelectorAll('.scroll-reveal');
+      elementsToAnimate.forEach(el => observer.observe(el));
+    });
   </script>
 
 </body>
