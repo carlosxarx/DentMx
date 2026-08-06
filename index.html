@@ -84,73 +84,13 @@
       transform: scale(1.05);
     }
 
-    /* === PERSONAJE FLOTANTE INTERACTIVO (WIDGET ESQUINA) === */
-    .mascot-floating-widget {
-      position: fixed;
-      bottom: 25px;
-      left: 25px;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .mascot-speech-bubble {
-      background: #ffffff;
-      color: var(--dent-teal-dark);
-      padding: 10px 16px;
-      border-radius: 18px;
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: 0 10px 25px rgba(0, 80, 91, 0.18);
-      border: 2px solid rgba(0, 80, 91, 0.1);
-      position: relative;
-      animation: popIn 0.5s ease forwards;
-      white-space: nowrap;
-    }
-
-    .mascot-speech-bubble::after {
-      content: '';
-      position: absolute;
-      left: -8px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-width: 6px 8px 6px 0;
-      border-style: solid;
-      border-color: transparent #ffffff transparent transparent;
-    }
-
-    .mascot-widget-img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 16px rgba(0, 80, 91, 0.25));
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      animation: floatSmooth 3.5s ease-in-out infinite;
-    }
-
-    .mascot-floating-widget:hover .mascot-widget-img {
-      transform: scale(1.2) rotate(-5deg);
-    }
-
-    /* Keyframes Animaciones */
-    @keyframes floatSmooth {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.8) translateX(-10px); }
-      100% { opacity: 1; transform: scale(1) translateX(0); }
-    }
-
-
     /* === ESTILOS DE SEPARADORES SVG === */
     .dent-divider {
       width: 100%;
       overflow: hidden;
       line-height: 0;
+      position: relative;
+      z-index: 2;
     }
 
     .dent-divider svg {
@@ -160,70 +100,92 @@
       height: 60px;
     }
 
-    @media (max-width: 900px) {
-      .dent-top-banner {
-        flex-direction: column;
-        gap: 8px;
-        padding: 10px 15px;
-        font-size: 12.5px;
-      }
-
-      .dent-divider svg {
-        height: 35px;
-      }
-
-      .mascot-speech-bubble {
-        display: none; /* Se oculta el texto en móviles pequeños para no estorbar */
-      }
-      
-      .mascot-widget-img {
-        width: 55px;
-        height: 55px;
-      }
+    /* === SECCIÓN HERO DINÁMICA / BIENVENIDA === */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      background: radial-gradient(circle at 10% 20%, rgba(0, 125, 140, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(0, 80, 91, 0.1) 0%, transparent 50%);
+      overflow: hidden;
     }
 
+    /* Luces de fondo flotantes */
+    .hero-bg-glow-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(0, 125, 140, 0.15);
+      filter: blur(90px);
+      border-radius: 50%;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
 
-    /* === SECCIÓN 0: HERO / BIENVENIDA CON PERSONAJE === */
+    .hero-bg-glow-2 {
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 350px;
+      height: 350px;
+      background: rgba(0, 80, 91, 0.12);
+      filter: blur(80px);
+      border-radius: 50%;
+      animation: pulseGlow 8s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+      100% { transform: scale(1.2) translate(30px, -20px); opacity: 1; }
+    }
+
     .dent-hero-section {
       width: 100%;
-      min-height: 75vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 30px;
+      padding: 60px 30px;
+      position: relative;
+      z-index: 2;
+      gap: 40px;
     }
 
     .hero-content {
-      width: 50%;
-      max-width: 520px;
+      width: 55%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
+    }
+
+    .hero-brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .hero-brand {
-      font-size: 44px;
-      font-weight: 800;
+      font-size: 52px;
+      font-weight: 900;
       color: var(--dent-teal-main);
       letter-spacing: -2px;
+      line-height: 1;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, rgba(0, 80, 91, 0.1), rgba(0, 125, 140, 0.15));
+      gap: 6px;
+      background: rgba(0, 80, 91, 0.08);
       color: var(--dent-teal-main);
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 30px;
       font-size: 13px;
       font-weight: 800;
-      letter-spacing: 0.5px;
-      width: fit-content;
       border: 1px solid rgba(0, 80, 91, 0.15);
-      box-shadow: 0 4px 12px rgba(0, 80, 91, 0.05);
+      backdrop-filter: blur(4px);
     }
 
     .hero-title {
@@ -241,26 +203,54 @@
     }
 
     .hero-subtitle {
-      font-size: 16.5px;
+      font-size: 17px;
       color: var(--dent-text-sub);
       line-height: 1.6;
+      max-width: 540px;
+    }
+
+    /* Píldoras de beneficios */
+    .hero-features-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dent-teal-dark);
+      border: 1px solid rgba(0, 80, 91, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .feature-pill svg {
+      color: var(--dent-teal-light);
     }
 
     .hero-actions {
       display: flex;
       gap: 14px;
-      margin-top: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
     }
 
     .btn-primary-hero {
       background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
       color: #ffffff;
-      padding: 16px 28px;
+      padding: 16px 30px;
       border-radius: 14px;
       text-decoration: none;
       font-weight: 800;
-      font-size: 15px;
-      box-shadow: 0 10px 25px rgba(0, 80, 91, 0.3);
+      font-size: 15.5px;
+      box-shadow: 0 10px 25px rgba(0, 80, 91, 0.28);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: inline-flex;
       align-items: center;
@@ -269,18 +259,18 @@
 
     .btn-primary-hero:hover {
       transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 14px 30px rgba(0, 80, 91, 0.4);
+      box-shadow: 0 14px 30px rgba(0, 80, 91, 0.38);
     }
 
     .btn-secondary-hero {
       background: #ffffff;
       color: var(--dent-teal-main);
       border: 2px solid rgba(0, 80, 91, 0.2);
-      padding: 16px 24px;
+      padding: 16px 26px;
       border-radius: 14px;
       text-decoration: none;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 15.5px;
       transition: all 0.3s ease;
     }
 
@@ -290,175 +280,131 @@
       transform: translateY(-2px);
     }
 
-    .hero-visual {
-      width: 45%;
+    /* Panel Visual Dinámico de la Derecha */
+    .hero-visual-panel {
+      width: 42%;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      gap: 16px;
       position: relative;
     }
 
-    /* Contenedor del Personaje en Hero con halo brillante */
-    .hero-mascot-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hero-mascot-wrapper::before {
-      content: '';
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(0, 125, 140, 0.2) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: 1;
-    }
-
-    .hero-mascot-img {
-      width: 100%;
-      height: auto;
-      max-height: 380px;
-      object-fit: contain;
-      z-index: 2;
-      filter: drop-shadow(0 15px 30px rgba(0, 80, 91, 0.2));
-      animation: floatSmooth 4s ease-in-out infinite;
-      transition: transform 0.4s ease;
-      cursor: pointer;
-    }
-
-    .hero-mascot-img:hover {
-      transform: scale(1.05) rotate(2deg);
-    }
-
-
-    /* === SECCIÓN 1: TRATAMIENTOS === */
-    .dent-services-section {
-      width: 100%;
-      padding: 20px 30px 40px 30px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .hero-card-glass {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 54, 61, 0.07);
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .services-header {
-      text-align: center;
-      max-width: 600px;
-      margin-bottom: 30px;
+    .hero-card-glass:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 54, 61, 0.12);
     }
 
-    .services-kicker {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      font-weight: 800;
-      color: var(--dent-teal-light);
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .services-title {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--dent-teal-dark);
-      letter-spacing: -1px;
-      line-height: 1.2;
-    }
-
-    .services-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .service-card {
-      background: var(--dent-white);
-      padding: 30px 24px;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 80, 91, 0.08);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    .glass-card-header {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 14px;
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
     }
 
-    .service-icon-box {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
+    .glass-icon-box {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--dent-teal-main), var(--dent-teal-light));
+      color: #ffffff;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      transition: all 0.4s ease;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 16px rgba(0, 80, 91, 0.25);
     }
 
-    /* Colores por tarjeta */
-    .card-limpieza .service-icon-box { background: linear-gradient(135deg, #00b4d8, #0077b6); }
-    .card-ortodoncia .service-icon-box { background: linear-gradient(135deg, #007d8c, #00505b); }
-    .card-blanqueamiento .service-icon-box { background: linear-gradient(135deg, #38b000, #007200); }
-    .card-resinas .service-icon-box { background: linear-gradient(135deg, #023e8a, #0077b6); }
-    .card-endodoncia .service-icon-box { background: linear-gradient(135deg, #7209b7, #4361ee); }
-    .card-implantes .service-icon-box { background: linear-gradient(135deg, #0f4c5c, #e36414); }
-
-    .service-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 16px 30px rgba(0, 80, 91, 0.15);
-      border-color: transparent;
-    }
-
-    .card-limpieza:hover { background: linear-gradient(145deg, #00b4d8, #0077b6); }
-    .card-ortodoncia:hover { background: linear-gradient(145deg, #007d8c, #00505b); }
-    .card-blanqueamiento:hover { background: linear-gradient(145deg, #2b9348, #007200); }
-    .card-resinas:hover { background: linear-gradient(145deg, #023e8a, #0077b6); }
-    .card-endodoncia:hover { background: linear-gradient(145deg, #7209b7, #4361ee); }
-    .card-implantes:hover { background: linear-gradient(145deg, #0f4c5c, #e36414); }
-
-    .service-card:hover .service-icon-box {
-      background: #ffffff !important;
-      color: var(--dent-teal-dark) !important;
-      transform: rotate(-10deg) scale(1.15);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .service-name {
-      font-size: 19px;
+    .glass-card-info h4 {
+      font-size: 17px;
       font-weight: 800;
       color: var(--dent-teal-dark);
-      transition: color 0.3s ease;
     }
 
-    .service-desc {
-      font-size: 13.5px;
+    .glass-card-info p {
+      font-size: 13px;
       color: var(--dent-text-sub);
-      line-height: 1.5;
-      transition: color 0.3s ease;
     }
 
-    .service-card:hover .service-name,
-    .service-card:hover .service-desc {
-      color: #ffffff !important;
+    .glass-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      border-top: 1px solid rgba(0, 80, 91, 0.08);
+      padding-top: 16px;
     }
 
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
 
-    /* === SECCIÓN 2: UBICACIÓN Y MAPA === */
+    .stat-number {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dent-teal-main);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--dent-text-sub);
+      font-weight: 600;
+    }
+
+    /* Tarjeta flotante de valoración */
+    .rating-badge-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 80, 91, 0.1);
+      width: fit-content;
+      align-self: flex-end;
+      transform: rotate(1.5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .rating-badge-card:hover {
+      transform: rotate(0deg) scale(1.03);
+    }
+
+    .stars-box {
+      color: #f59e0b;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .rating-text p {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--dent-teal-dark);
+    }
+
+    .rating-text span {
+      font-size: 11px;
+      color: var(--dent-text-sub);
+    }
+
+    /* === SECCIÓN UBICACIÓN Y MAPA === */
     .dent-fullscreen-wrapper {
       width: 100%;
       display: flex;
       align-items: center;
       background-color: var(--dent-bg);
-      padding: 20px 0 40px 0;
+      padding: 60px 0;
     }
 
     .dent-info-panel {
@@ -644,8 +590,7 @@
       border: 1px solid rgba(0, 80, 91, 0.1);
     }
 
-
-    /* === SECCIÓN 3: WHATSAPP === */
+    /* === SECCIÓN WHATSAPP === */
     .dent-whatsapp-wrapper {
       width: 100%;
       background-color: var(--wa-bg-dark);
@@ -656,7 +601,7 @@
 
     .dent-wa-info-panel {
       width: 50%;
-      padding: 40px 50px;
+      padding: 60px 50px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -742,7 +687,7 @@
       align-items: center;
       justify-content: center;
       background: radial-gradient(circle at 50% 50%, rgba(0, 125, 140, 0.15) 0%, transparent 70%);
-      padding: 40px 30px;
+      padding: 60px 30px;
     }
 
     .wa-chat-card {
@@ -845,34 +790,39 @@
 
     /* === ADAPTACIÓN MÓVIL === */
     @media (max-width: 900px) {
+      .dent-top-banner {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 15px;
+        font-size: 12.5px;
+      }
+
       .dent-hero-section {
         flex-direction: column;
         min-height: auto;
         padding: 40px 20px;
-        gap: 30px;
       }
 
-      .hero-content, .hero-visual {
+      .hero-content, .hero-visual-panel {
         width: 100%;
-        max-width: 100%;
       }
 
       .hero-title {
         font-size: 36px;
       }
 
-      .dent-services-section {
-        padding: 20px 20px 15px 20px;
+      .hero-subtitle {
+        font-size: 15.5px;
       }
 
-      .services-title {
-        font-size: 26px;
+      .rating-badge-card {
+        align-self: center;
       }
 
       .dent-fullscreen-wrapper, .dent-whatsapp-wrapper {
         flex-direction: column;
         min-height: auto;
-        padding: 15px 0;
+        padding: 20px 0;
       }
 
       .dent-info-panel, .dent-map-panel, .dent-wa-info-panel, .dent-wa-visual-panel {
@@ -886,6 +836,10 @@
 
       .dent-main-heading, .dent-wa-heading { 
         font-size: 26px; 
+      }
+
+      .dent-divider svg {
+        height: 35px;
       }
     }
   </style>
@@ -902,125 +856,96 @@
     </a>
   </div>
 
+  <!-- CONTAINER DE HERO CON EFECTO DE LUZ Y FONDO DINÁMICO -->
+  <div class="hero-container">
+    <div class="hero-bg-glow-1"></div>
+    <div class="hero-bg-glow-2"></div>
 
-  <!-- WIDGET FLOTANTE DEL PERSONAJE (ESQUINA INFERIOR IZQUIERDA) -->
-  <div class="mascot-floating-widget" onclick="scrollToWhatsApp()" title="¡Haz clic para chatear!">
-    <div class="mascot-speech-bubble">¡Hola! ¿Agendamos tu cita? 👋</div>
-    <img src="mascota-dent.png" alt=":Dent Mascota" class="mascot-widget-img">
+    <!-- SECCIÓN 1: BIENVENIDA (HERO) -->
+    <section class="dent-hero-section">
+      <div class="hero-content">
+        <div class="hero-brand-badge">
+          <div class="hero-brand">:Dent</div>
+          <div class="hero-badge">✨ Odontología Moderna</div>
+        </div>
+
+        <h1 class="hero-title">Cuidamos tu sonrisa <span>como se merece.</span></h1>
+        <p class="hero-subtitle">Tratamientos sin dolor, tecnología de vanguardia y atención humana diseñada para devolverte la seguridad al sonreír.</p>
+
+        <!-- Píldoras de beneficios -->
+        <div class="hero-features-pills">
+          <div class="feature-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Atención Sin Dolor</span>
+          </div>
+          <div class="feature-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>100% Personalizado</span>
+          </div>
+          <div class="feature-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Fácil Acceso</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20agendar%20mi%20primera%20cita%20y%20aplicar%20el%2010%25%20de%20descuento." target="_blank" rel="noopener noreferrer" class="btn-primary-hero">Agendar Cita con 10% OFF</a>
+          <a href="#ubicacion" class="btn-secondary-hero">Cómo Llegar</a>
+        </div>
+      </div>
+
+      <!-- PANEL VISUAL DERECHO CON GLASSMORPHISM Y SOCIAL PROOF -->
+      <div class="hero-visual-panel">
+        <div class="hero-card-glass">
+          <div class="glass-card-header">
+            <div class="glass-icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <div class="glass-card-info">
+              <h4>Tu salud dental en buenas manos</h4>
+              <p>Diagnóstico preciso desde la primera consulta</p>
+            </div>
+          </div>
+
+          <div class="glass-stats-grid">
+            <div class="stat-item">
+              <span class="stat-number">+1,200</span>
+              <span class="stat-label">Sonrisas Renovadas</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Garantía de Cuidado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta Flotante de Calificación -->
+        <div class="rating-badge-card">
+          <div class="stars-box">★★★★★</div>
+          <div class="rating-text">
+            <p>Excelente Atención</p>
+            <span>Pacientes Satisfechos</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
-
-  <!-- SECCIÓN 0: HERO / BIENVENIDA -->
-  <section class="dent-hero-section">
-    <div class="hero-content">
-      <div class="hero-brand">:Dent</div>
-      <div class="hero-badge">✨ Tu Sonrisa Empieza Aquí</div>
-      <h1 class="hero-title">Cuidamos tu sonrisa <span>como se merece.</span></h1>
-      <p class="hero-subtitle">Tratamientos dentales sin dolor, rápidos y diseñados para devolverte la confianza de sonreír al máximo.</p>
-
-      <div class="hero-actions">
-        <a href="https://wa.me/525532207995?text=Hola,%20me%20gustaría%20agendar%20mi%20primera%20cita%20y%20aplicar%20el%2010%25%20de%20descuento." target="_blank" rel="noopener noreferrer" class="btn-primary-hero">Agendar Cita con 10% OFF</a>
-        <a href="#tratamientos" class="btn-secondary-hero">Ver Tratamientos</a>
-      </div>
-    </div>
-
-    <!-- PERSONAJE EN HERO PRINCIPAL -->
-    <div class="hero-visual">
-      <div class="hero-mascot-wrapper">
-        <img src="mascota-dent.png" alt=":Dent Mascot" class="hero-mascot-img" onclick="scrollToWhatsApp()">
-      </div>
-    </div>
-  </section>
-
-  <!-- SEPARADOR 1: ONDA SUAVE -->
+  <!-- SEPARADOR 1 -->
   <div class="dent-divider">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.3,200.75,117.8,241.22,115.77,281.71,98,321.39,56.44Z" fill="#ffffff"></path>
-    </svg>
-  </div>
-
-
-  <!-- SECCIÓN 1: TRATAMIENTOS Y SERVICIOS -->
-  <section class="dent-services-section" id="tratamientos" style="background: #ffffff;">
-    <div class="services-header">
-      <span class="services-kicker">Especialidades</span>
-      <h2 class="services-title">Tratamientos diseñados para tu sonrisa</h2>
-    </div>
-
-    <div class="services-grid">
-      <!-- 1. Limpieza Dental -->
-      <div class="service-card card-limpieza" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3C4.5 3 3 5 3 8c0 4.5 2.5 8 4 11 1 2 2 3 5 3s4-1 5-3c1.5-3 4-6.5 4-11 0-3-1.5-5-4-5-2 0-3 1-5 2.5C10 4 9 3 7 3z"/><path d="M12 9v4"/><path d="M10 11h4"/></svg>
-        </div>
-        <h3 class="service-name">Limpieza Dental</h3>
-        <p class="service-desc">Eliminación de sarro y placa con ultrasonido para mantener tus encías sanas y sin inflamación.</p>
-      </div>
-
-      <!-- 2. Ortodoncia -->
-      <div class="service-card card-ortodoncia" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><line x1="9" y1="12" x2="15" y2="12"/><path d="M6 6v3"/><path d="M18 6v3"/><path d="M6 15v3"/><path d="M18 15v3"/></svg>
-        </div>
-        <h3 class="service-name">Ortodoncia</h3>
-        <p class="service-desc">Brackets estéticos y alineadores invisibles diseñados para corregir la posición y mordida.</p>
-      </div>
-
-      <!-- 3. Blanqueamiento -->
-      <div class="service-card card-blanqueamiento" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8-5.8 1.9 5.8 1.9 1.9 5.8 1.9-5.8 5.8-1.9-5.8-1.9z"/><path d="M5 3 3.5 6.5 0 8l3.5 1.5L5 13l1.5-3.5L10 8 6.5 6.5z"/><path d="M19 14l1.5 3.5L24 19l-3.5 1.5L19 24l-1.5-3.5L14 19l3.5-1.5z"/></svg>
-        </div>
-        <h3 class="service-name">Blanqueamiento</h3>
-        <p class="service-desc">Tecnología de aclarado dental seguro para devolverle el brillo natural a tus dientes sin sensibilidad.</p>
-      </div>
-
-      <!-- 4. Resinas Estéticas -->
-      <div class="service-card card-resinas" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/><path d="m9 12 2 2 4-4"/></svg>
-        </div>
-        <h3 class="service-name">Resinas Estéticas</h3>
-        <p class="service-desc">Restauraciones de alta estética del tono exacto de tu diente para reparar bordes o pequeñas caries.</p>
-      </div>
-
-      <!-- 5. Endodoncia -->
-      <div class="service-card card-endodoncia" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10s10-4.5 10-10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
-        </div>
-        <h3 class="service-name">Endodoncia</h3>
-        <p class="service-desc">Tratamiento especializado para eliminar infecciones profundas y conservar tu diente natural intacto.</p>
-      </div>
-
-      <!-- 6. Implantes y Prótesis -->
-      <div class="service-card card-implantes" onclick="scrollToWhatsApp()">
-        <div class="service-icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M9 8h6"/><path d="M10 12h4"/><path d="M11 16h2"/><path d="M12 16v6"/></svg>
-        </div>
-        <h3 class="service-name">Implantes Dentales</h3>
-        <p class="service-desc">Soluciones definitivas para sustituir piezas faltantes con la misma firmeza y estética de un diente real.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEPARADOR 2: ONDA INVERTIDA -->
-  <div class="dent-divider" style="background: #ffffff;">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#00505b"></path>
       <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5V0Z" fill="var(--dent-bg)"></path>
     </svg>
   </div>
 
-
   <!-- SECCIÓN 2: UBICACIÓN Y MAPA -->
-  <section class="dent-fullscreen-wrapper">
+  <section class="dent-fullscreen-wrapper" id="ubicacion">
     <div class="dent-info-panel">
       <div class="dent-brand-logo">:Dent</div>
 
       <div class="dent-content-body">
         <span class="dent-kicker">Nuestra Ubicación</span>
-        <h1 class="dent-main-heading">Encuéntranos fácilmente</h1>
+        <h2 class="dent-main-heading">Encuéntranos fácilmente</h2>
 
         <div class="dent-address-box" onclick="copyFullAddress()" title="Haz clic para copiar dirección">
           <div class="address-icon-wrapper">
@@ -1076,16 +1001,15 @@
     </div>
   </section>
 
-  <!-- SEPARADOR 3: ONDA OSCURA -->
+  <!-- SEPARADOR 2 -->
   <div class="dent-divider">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
       <path d="M0,0C150,90,350,-40,500,65C650,170,900,10,1200,40V120H0Z" fill="var(--wa-bg-dark)"></path>
     </svg>
   </div>
 
-
-  <!-- SECCIÓN 3: WHATSAPP -->
-  <section class="dent-whatsapp-wrapper" id="wa-section">
+  <!-- SECCIÓN 3: WHATSAPP Y CONTACTO -->
+  <section class="dent-whatsapp-wrapper" id="contacto">
     <div class="dent-wa-info-panel">
       <div class="dent-wa-content">
         <span class="dent-wa-kicker">Atención Personalizada</span>
@@ -1159,13 +1083,6 @@
           }, 2000);
         }
       });
-    }
-
-    function scrollToWhatsApp() {
-      const waSection = document.getElementById('wa-section');
-      if (waSection) {
-        waSection.scrollIntoView({ behavior: 'smooth' });
-      }
     }
   </script>
 
